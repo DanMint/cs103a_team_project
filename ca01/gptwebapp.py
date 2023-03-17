@@ -104,6 +104,22 @@ def veronika():
         return render_template("veronika.html", show_answer=True, prompt=prompt, answer=answer_split)
     else:
         return render_template("veronika.html", show_answer=False)
+    
+    
+@app.route('/daniel', methods=['GET', 'POST'])
+def daniel():
+    ''' handle a get request by sending a form 
+        and a post request by returning the GPT response
+    '''
+    if request.method == 'POST':
+        prompt = request.form['prompt']
+        or_prompt = prompt
+        prompt = "Translate the following into Hebrew\"" + prompt + "\""
+        answer = gptAPI.getResponse(prompt)
+        return render_template("daniel.html", show_answer=True, prompt=prompt, answer=answer, or_prompt=or_prompt)
+    else:
+        return render_template("daniel.html", show_answer=False)
+
 
 if __name__=='__main__':
     # run the code on port 5001, MacOS uses port 5000 for its own service :(
